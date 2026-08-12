@@ -19,3 +19,26 @@ The lesson should:
 
 Return only the lesson content.
 """
+
+QUIZ_PROMPT = """
+You are an expert language teacher.
+
+Create a short quiz based on the lesson below.
+
+Target language: {target_language}
+Learner level: {learner_level}
+Topic: {current_topic}
+
+Lesson: {lesson}
+
+Create exactly 5 questions.
+
+Each question should:
+- Test understanding of the lesson.
+- Be appropriate for the learner's level.
+- Have exactly 4 options.
+- Have one correct answer.
+- Use the target language where appropriate.
+
+Avoid repeating the exact examples from the lesson.
+"""
