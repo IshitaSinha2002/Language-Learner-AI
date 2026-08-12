@@ -119,3 +119,28 @@ def generate_quiz(state: LearningState):
     return {
         "quiz": quiz
     }
+
+def evaluate_answers(state: LearningState):
+    quiz = state["quiz"]
+    answers = state["answers"]
+
+    correct = 0
+    weaknesses = []
+
+    for question, answer in zip(quiz, answers):
+        if answer.strip().lower() == question["correct_answer"].strip().lower():
+            correct +=1
+        else:
+            weaknesses.append(question["question"])
+
+    total_questions = len(quiz)
+
+    if total_questions == 0:
+        score = 0.0
+    else:
+        score = (correct/total_questions) * 100
+
+    return {
+        "score": score,
+        "weaknesses": weaknesses
+    }
