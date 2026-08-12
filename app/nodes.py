@@ -144,3 +144,28 @@ def evaluate_answers(state: LearningState):
         "score": score,
         "weaknesses": weaknesses
     }
+
+def update_progress(state: LearningState):
+    score = state["score"]
+    current_topic = state["current_topic"]
+    weaknesses = state["weaknesses"]
+
+    history = state["learning_history"].copy()
+    mastered_topics = state["mastered_topics"].copy()
+
+    session_record = {
+        "topic": current_topic,
+        "score": score,
+        "weaknesses": weaknesses
+    }
+
+    history.append(session_record)
+
+    if score >= 70 and current_topic not in mastered_topics:
+        mastered_topics.append(current_topic)
+
+    return {
+        "learning_history": history,
+        "mastered_topics": mastered_topics,
+        "weaknesses": weaknesses
+    }
