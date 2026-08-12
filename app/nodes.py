@@ -31,3 +31,27 @@ def load_learner(state: LearningState):
         "current_topic": "",
         "next_topic": "",
     }
+
+def analyze_progress(state: LearningState):
+    history = state["learning_history"]
+    weaknesses = state["weaknesses"]
+    mastered_topics = state["mastered_topics"]
+
+    if not history:
+        return {
+            "curent_topic": "Basic Vocabulary",
+            "next_topic": "Basic Vocabulary"
+        }
+
+    last_session = history[-1]
+
+    if last_session["score"] < 70:
+        return {
+            "current_topic": last_session["topic"],
+            "next_topic": last_session["topic"]
+        }
+
+    return {
+        "current_topic": state["next_topic"],
+        "next_topic": state["next_topic"]
+    }
