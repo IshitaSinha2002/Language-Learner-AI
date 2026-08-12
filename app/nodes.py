@@ -201,3 +201,24 @@ def choose_next_topic(state: LearningState):
     return {
         "next_topic": "Conversation"
     }
+
+def save_learner(state: LearningState):
+    with open(LEARNERS_FILE, "r") as file:
+        learners = json.load(file)
+
+    learner_name = state["learner_name"]
+
+    learners["learners"][learner_name] = {
+        "target_language": state["target_language"],
+        "learner_level": state["learner_level"],
+        "current_topic": state["current_topic"],
+        "weaknesses": state["weaknesses"],
+        "mastered_topics": state["mastered_topics"],
+        "learning_history": state["learning_history"],
+        "next_topic": state["next_topic"]
+    }
+
+    with open(LEARNERS_FILE, "w") as file:
+        json.dump(learners, file, indent=4)
+
+    return {}
