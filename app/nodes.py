@@ -169,3 +169,35 @@ def update_progress(state: LearningState):
         "mastered_topics": mastered_topics,
         "weaknesses": weaknesses
     }
+
+def choose_next_topic(state: LearningState):
+    score = state["score"]
+    current_topic = state["current_topic"]
+    mastered_topics = state["mastered_topics"]
+
+    if score < 70:
+        return {
+            "next_topic": current_topic
+        }
+
+    topic_sequence = [
+        "Basic Vocabulary",
+        "Greetings",
+        "Present Tense",
+        "Past Tense",
+        "Future Tense",
+        "Conversation"
+    ]
+
+    if current_topic in topic_sequence:
+        current_index = topic_sequence.index(current_topic)
+
+        for topic in topic_sequence[current_index + 1:]:
+            if topic not in mastered_topics:
+                return {
+                    "next_topic": topic
+                }
+
+    return {
+        "next_topic": "Conversation"
+    }
